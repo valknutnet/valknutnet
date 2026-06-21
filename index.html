@@ -8,11 +8,7 @@
     <!-- Подключаем иконки (FontAwesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Более современный шрифт, похожий на Telegram-стиль (Inter) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
-
+    <!-- Шрифт Arial (стандартный, будет работать везде) -->
     <style>
         /* Сброс стилей и базовые настройки */
         * {
@@ -26,7 +22,10 @@
             background-color: #080808; 
             background-image: radial-gradient(circle at 50% 0%, #151515 0%, #000000 70%);
             color: #f0f0f0;
-            font-family: 'Inter', sans-serif;
+            
+            /* Основной шрифт Arial */
+            font-family: Arial, Helvetica, sans-serif;
+            
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -38,16 +37,13 @@
 
         /* Главный контейнер — Эффект Жидкого Стекла */
         .glass-container {
-            /* Прозрачный фон с размытием */
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             
-            /* Ключевая деталь: тонкая светящаяся граница */
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
             
-            /* Закругленные углы */
             border-radius: 24px; 
             padding: 50px 40px;
             max-width: 600px;
@@ -56,40 +52,50 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Легкая анимация при наведении на контейнер */
         .glass-container:hover {
             transform: translateY(-3px);
             box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(255,255,255,0.02);
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Логотип (в стиле Telegram, но в вашем стиле V) */
-        .logo-icon {
+        /* Обертка для логотипа-картинки с рамкой */
+        .logo-wrapper {
             display: inline-block;
-            font-size: 28px;
-            font-weight: 600;
             margin-bottom: 25px;
+            
+            /* Рамка как в Telegram-стиле */
             border: 2px solid #ffffff;
-            border-radius: 16px; /* Скругление как в современных мессенджерах */
-            width: 64px;
-            height: 64px;
-            line-height: 60px;
-            text-align: center;
+            border-radius: 16px; 
+            padding: 4px; /* Небольшой отступ между рамкой и картинкой */
+            
             background: rgba(0,0,0,0.4);
-            letter-spacing: 1px;
-            color: #ffffff;
+            
+            /* Фиксированный размер, чтобы рамка не прыгала */
+            width: 80px;
+            height: 80px;
         }
 
-        /* Заголовок */
+        /* Сама картинка логотипа */
+        .logo-image {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px; /* Внутреннее скругление картинки */
+            object-fit: cover; /* Чтобы картинка не искажалась */
+        }
+
+        /* Заголовок: Жирный + Курсив + Arial */
         h1 {
             font-size: 28px;
-            font-weight: 600;
+            font-weight: 700; /* Bold */
+            font-style: italic; /* Italic */
+            font-family: Arial, Helvetica, sans-serif;
             letter-spacing: 2px;
             margin-bottom: 15px;
             color: #ffffff;
         }
 
-        /* Тонкий разделитель */
+        /* Разделитель */
         .divider {
             width: 40px;
             height: 2px;
@@ -98,24 +104,27 @@
             border-radius: 2px;
         }
 
-        /* Описание деятельности */
+        /* Описание: Жирный + Курсив + Arial */
         .description {
             font-size: 14px;
             line-height: 1.7;
-            color: #b0b0b0; /* Светло-серый для мягкости */
+            color: #b0b0b0;
             margin-bottom: 40px;
-            font-weight: 400;
             padding: 0 10px;
+            
+            font-weight: 700; /* Bold */
+            font-style: italic; /* Italic */
+            font-family: Arial, Helvetica, sans-serif;
         }
 
-        /* Сетка для кнопок (2 колонки как в интерфейсах) */
+        /* Сетка кнопок */
         .link-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
         }
 
-        /* Ссылки-кнопки в стиле Telegram (чистые, прозрачные) */
+        /* Кнопки */
         a {
             display: flex;
             align-items: center;
@@ -125,10 +134,11 @@
             color: #ffffff;
             text-decoration: none;
             padding: 18px 10px;
-            border-radius: 14px; /* Скругление кнопок */
+            border-radius: 14px;
             border: 1px solid transparent;
             font-size: 14px;
-            font-weight: 500;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 700; /* Жирный текст в кнопках */
             letter-spacing: 0.5px;
             transition: all 0.25s ease-in-out;
         }
@@ -139,55 +149,67 @@
             transition: transform 0.2s ease;
         }
 
-        /* Состояние наведения (кнопка начинает слегка светиться) */
         a:hover {
             background: rgba(255, 255, 255, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.25);
-            transform: scale(1.02); /* Легкое увеличение */
+            transform: scale(1.02);
         }
 
         a:hover i {
-            transform: translateY(-1px); /* Иконка чуть поднимается */
+            transform: translateY(-1px);
         }
 
-        /* Состояние активного нажатия (как в реальном приложении) */
         a:active {
             transform: scale(0.98);
             background: rgba(255, 255, 255, 0.05);
         }
 
-        /* Цветовые акценты для иконок (легкие оттенки) */
         .youtube-link i { color: #ff3333; }
         .telegram-link i { color: #2aabee; }
 
-        /* Адаптация для мобильных устройств (одна колонка) */
+        /* Адаптация для мобильных устройств */
         @media (max-width: 600px) {
             .glass-container { padding: 30px 20px; border-radius: 20px; }
             h1 { font-size: 22px; }
             .link-grid { grid-template-columns: 1fr; }
-            .logo-icon { width: 56px; height: 56px; line-height: 52px; font-size: 24px; }
+            
+            .logo-wrapper {
+                width: 70px;
+                height: 70px;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="glass-container">
-        <!-- Иконка логотипа в новом стиле -->
-        <div class="logo-icon">V</div>
-
-        <!-- Название проекта -->
-        <h1>VALKNUTNET</h1>
         
-        <!-- Тонкий разделитель -->
-        <div class="divider"></div>
-
-        <!-- Короткое описание -->
-        <div class="description">
-            Независимое сообщество экспертов в области кибербезопасности, OSINT и цифрового анализа.<br><br>
-            Информация — это ресурс. Мы добываем и защищаем данные. Логика превыше морализаторства.
+        <!-- Логотип-картинка в рамке -->
+        <div class="logo-wrapper">
+            <img src="https://i.ibb.co/HT76QVJx/base.png" alt="VALKNUTNET Logo" class="logo-image">
         </div>
 
-        <!-- Кнопки перехода -->
+        <!-- Заголовок (Bold Italic Arial) -->
+        <h1>VALKNUTNET</h1>
+        
+        <!-- Разделитель -->
+        <div class="divider"></div>
+
+        <!-- Описание (Bold Italic Arial) -->
+        <div class="description">
+           Survival today is a fight to preserve the internet freedom of every person.
+
+We are VALKNUTNET. An anonymous group experts in cyber security, crypto, and people.
+We do not suffer from greed, hypocrisy, or virtue.
+
+We value and accept only rationality and logic in actions.
+If data must be published, we publish it. If freedom must be protected, we protect it.
+The world is mechanics, chemistry, and logic.
+We are VALKNUTNET. Until we meet.
+
+        </div>
+
+        <!-- Кнопки -->
         <div class="link-grid">
             <a href="ССЫЛКА_НА_ТВОЙ_КАНАЛ_YOUTUBE" target="_blank" class="youtube-link">
                 <i class="fab fa-youtube"></i> YouTube
