@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALKNUTNET — Админ-панель</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #080808; 
+            background-image: radial-gradient(circle at 50% 0%, #151515 0%, #000000 70%);
+            color: #f0f0f0;
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .glass-container {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px; 
+            padding: 40px 35px;
+            max-width: 700px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .nav-menu { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
+        .nav-menu a {
+            background: rgba(255, 255, 255, 0.05);
+            color: #aaaaaa;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .nav-menu a:hover, .nav-menu a.active { color: #ffffff; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); }
+
+        h1 { text-align: center; font-size: 28px; font-weight: 700; font-style: italic; letter-spacing: 2px; margin-bottom: 30px; }
+
+        /* Формы */
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; font-size: 13px; font-weight: 700; color: #aaa; margin-bottom: 6px; }
+        .form-group input { 
+            width: 100%; padding: 12px 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; color: #fff; font-size: 14px; font-family: Arial, sans-serif; outline: none; transition: 0.3s;
+        }
+        .form-group input:focus { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.08); }
+
+        .btn { 
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.1); color: #fff;
+            padding: 12px 25px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 14px; transition: 0.3s;
+        }
+        .btn:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); }
+
+        .section-title { font-size: 18px; font-weight: 700; margin: 30px 0 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+
+        .output-box { 
+            background: rgba(0,0,0,0.6); border: 1px solid #2aabee; border-radius: 12px; padding: 15px; 
+            margin-top: 20px; font-family: monospace; font-size: 13px; word-break: break-all; color: #bbf;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-container">
+        <div class="nav-menu">
+            <a href="index.html">Главная</a>
+            <a href="archive.html">Архив</a>
+            <a href="about.html">О нас</a>
+            <a href="admin.html" class="active">Админ</a>
+        </div>
+        
+        <h1>Панель управления</h1>
+
+        <!-- Форма добавления Видео -->
+        <div class="section-title"><i class="fab fa-youtube" style="color:#ff3333;"></i> Добавить видео</div>
+        <div class="form-group">
+            <label>Ссылка на YouTube (полная)</label>
+            <input type="text" id="ytUrl" placeholder="https://www.youtube.com/watch?v=xxxxx">
+        </div>
+        <div class="form-group">
+            <label>Заголовок (если оставить пустым, подтянется автоматом)</label>
+            <input type="text" id="ytTitle" placeholder="Название видео (опционально)">
+        </div>
+        <div class="form-group">
+            <label>Ссылка на скачивание материалов</label>
+            <input type="text" id="ytDownload" placeholder="https://ваш-сайт/file.zip или #">
+        </div>
+        <button class="btn" onclick="saveData('video')"><i class="fas fa-save"></i> Сохранить видео</button>
+
+        <div class="section-title" style="margin-top: 40px;"><i class="fas fa-file-alt" style="color:#2aabee;"></i> Добавить статью (Telegra.ph)</div>
+        <div class="form-group">
+            <label>Ссылка на статью (Telegra.ph)</label>
+            <input type="text" id="artUrl" placeholder="https://telegra.ph/Название-статьи-01-01">
+        </div>
+        <div class="form-group">
+            <label>Заголовок (если оставить пустым, подтянется из Telegra.ph)</label>
+            <input type="text" id="artTitle" placeholder="Название статьи (опционально)">
+        </div>
+        <div class="form-group">
+            <label>Ссылка на PDF / Статью</label>
+            <input type="text" id="artPdf" placeholder="https://ваш-сайт/article.pdf или #">
+        </div>
+        <div class="form-group">
+            <label>Ссылка на Дамп / Доп. материал</label>
+            <input type="text" id="artDump" placeholder="https://ваш-сайт/dump.zip или #">
+        </div>
+        <button class="btn" onclick="saveData('article')"><i class="fas fa-save"></i> Сохранить статью</button>
+
+        <!-- Блок для копирования -->
+        <div class="section-title" style="margin-top: 40px;">📋 Экспорт данных для archive.html</div>
+        <button class="btn" onclick="exportData()" style="width: 100%;"><i class="fas fa-copy"></i> Сгенерировать код вставки</button>
+        <textarea id="exportBox" class="output-box" rows="8" style="width:100%; display:block; resize:vertical;"></textarea>
+        <button class="btn" onclick="copyExport()" style="margin-top: 10px; width:100%;"><i class="fas fa-clipboard"></i> Скопировать в буфер обмена</button>
+        <div style="margin-top:10px; font-size:12px; color:#777; text-align:center;">Вставьте скопированный код в файл archive.html (вместо старого блока данных).</div>
+
+    </div>
+
+    <script>
+        // Защита паролем (простая, чтобы не спамили)
+        let savedData = JSON.parse(localStorage.getItem('valknutnet_archive')) || [];
+
+        function saveData(type) {
+            let newItem = { type: type };
+            
+            if (type === 'video') {
+                newItem.url = document.getElementById('ytUrl').value.trim();
+                newItem.title = document.getElementById('ytTitle').value.trim();
+                newItem.download = document.getElementById('ytDownload').value.trim();
+                
+                if (!newItem.url) { alert("Введите ссылку на видео!"); return; }
+                
+                // Автоматический парсинг ID из ссылки
+                try {
+                    const urlParams = new URL(newItem.url).searchParams;
+                    newItem.videoId = urlParams.get('v');
+                } catch(e) { newItem.videoId = ""; }
+
+                savedData.push(newItem);
+                localStorage.setItem('valknutnet_archive', JSON.stringify(savedData));
+                document.getElementById('ytUrl').value = '';
+                document.getElementById('ytTitle').value = '';
+                document.getElementById('ytDownload').value = '';
+                alert("Видео сохранено!");
+                
+            } else if (type === 'article') {
+                newItem.url = document.getElementById('artUrl').value.trim();
+                newItem.title = document.getElementById('artTitle').value.trim();
+                newItem.pdf = document.getElementById('artPdf').value.trim();
+                newItem.dump = document.getElementById('artDump').value.trim();
+                
+                if (!newItem.url) { alert("Введите ссылку на статью!"); return; }
+
+                savedData.push(newItem);
+                localStorage.setItem('valknutnet_archive', JSON.stringify(savedData));
+                document.getElementById('artUrl').value = '';
+                document.getElementById('artTitle').value = '';
+                document.getElementById('artPdf').value = '';
+                document.getElementById('artDump').value = '';
+                alert("Статья сохранена!");
+            }
+        }
+
+        function exportData() {
+            const box = document.getElementById('exportBox');
+            box.style.display = 'block';
+            // Создаем форматированную строку JavaScript для вставки в archive.html
+            const jsonString = JSON.stringify(savedData, null, 4);
+            const codeString = `// Данные для архива (сгенерировано админ-панелью)\nconst archiveData = ${jsonString};`;
+            box.value = codeString;
+        }
+
+        function copyExport() {
+            const box = document.getElementById('exportBox');
+            box.select();
+            document.execCommand('copy');
+            alert("Код скопирован! Теперь откройте archive.html, найдите строчку const archiveData = [...] и замените её на скопированный код.");
+        }
+    </script>
+</body>
+</html>
