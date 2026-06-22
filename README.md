@@ -38,8 +38,8 @@
 
 <p>
   <b>Navigation:</b><br>
-  <a href="https://valknutnet.github.io/archive.html">📦 Resources</a> &nbsp;|&nbsp;
-  <a href="https://valknutnet.github.io/about.html">ℹ️ About</a>
+  <a href="https://valknutnet.github.io/archive.html">Resources</a> &nbsp;|&nbsp;
+  <a href="https://valknutnet.github.io/about.html">About</a>
 </p>
 
 <hr style="border: 0; height: 1px; background: #333; margin: 30px 0;">
